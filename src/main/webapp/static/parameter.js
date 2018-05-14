@@ -1,5 +1,5 @@
-var url = "http://dubidubi.cn/meeting-back"
-// var url = "http://localhost:8080/meeting-back"
+//var url = "http://dubidubi.cn/meeting-back"
+var url = "http://localhost:8080/back"
 // 获取url中的参数
 function getUrlParam(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); // 构造一个含有目标参数的正则表达式对象
