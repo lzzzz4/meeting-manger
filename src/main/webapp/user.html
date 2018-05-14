@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="loading">
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+<link rel="stylesheet" href="static/css/amazeui.min.css">
+<link rel="stylesheet" href="static/css/admin.css">
+<link rel="stylesheet" href="static/css/app.css">
+<!-- 动画加载 -->
+<link rel="stylesheet" href="static/load/normalize.min.css">
+<link rel="stylesheet" href="static/load/style.css">
+<script src="static/load/index.js"></script>
+
+<link
+	href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<style type="text/css">
+.modal-dialog {
+	max-width: 500px;
+	margin: 10.75rem auto;
+}
+</style>
+</head>
+<body>
+
+	<div class="am-cf admin-main">
+		<!-- content start -->
+		<div class="admin-content">
+			<div class="admin-content-body">
+				<div class="am-cf am-padding am-padding-bottom-0">
+					<div class="am-fl am-cf">
+						<strong class="am-text-primary am-text-lg"> </strong><small>
+							<i class="icon-home"></i> &gt; 首页 &gt; 用户管理
+						</small>
+					</div>
+				</div>
+				<hr>
+				<div class="container2">
+					<div class="am-g">
+						<div class="am-u-sm-12 am-u-md-6">
+							<div class="am-btn-toolbar">
+								<div class="am-btn-group am-btn-group-xs">
+									<button type="button" class="am-btn am-btn-default btnAdd"
+										data-toggle="modal" data-target="#addUser">
+										<span class="icon-plus"></span> 新增
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="am-u-sm-12 am-u-md-3">
+							<select id="selDepart" class="form-control">
+								<option value="0">请选择部门</option>
+
+							</select>
+						</div>
+
+						<div class="am-u-sm-12 am-u-md-3">
+							<div class="am-input-group am-input-group-sm">
+								<input class="am-form-field" placeholder="请输入信息" id="search"
+									type="text"> <span class="am-input-group-btn">
+									<button class="am-btn am-btn-default" type="button"
+										id="btnsearch">搜索</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="am-g" style="margin-top: -30px;">
+						<div class="am-u-sm-12">
+							<form class="am-form" action="user/delAll.action">
+								<table
+									class="am-table am-table-striped am-table-hover table-main">
+									<thead>
+										<tr>
+											<th class="table-id">ID</th>
+											<th>工号</th>
+											<th class="table-title">姓名</th>
+											<th>部门名称</th>
+											<th>邮箱</th>
+											<th class="table-set">操作</th>
+										</tr>
+									</thead>
+									<tbody id="tUser">
+										<div class='loading-anim' id="loading">
+											<div class='border out'></div>
+											<div class='border in'></div>
+											<div class='border mid'></div>
+											<div class='circle'>
+												<span class='dot'></span> <span class='dot'></span> <span
+													class='dot'></span> <span class='dot'></span> <span
+													class='dot'></span> <span class='dot'></span> <span
+													class='dot'></span> <span class='dot'></span> <span
+													class='dot'></span> <span class='dot'></span> <span
+													class='dot'></span> <span class='dot'></span>
+											</div>
+										</div>
+									</tbody>
+								</table>
+								<!-- adduser 模态框start -->
+								<div class="modal fade" id="addUser" tabindex="-1" role="dialog"
+									aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">新增用户信息</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true">×</button>
+											</div>
+											<form class="form-horizontal" id="userForm">
+												<div class="modal-body">
+													<div class="form-group">
+														<label for="firstname" class="col-sm-2 control-label">工号</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control" name="account"
+																id="add_account" placeholder="请输入工号">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">密码</label>
+														<div class="col-sm-10">
+															<input type="password" class="form-control"
+																id="add_password" name="password" placeholder="请输入密码">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">姓名</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control" name="name"
+																id="add_name" placeholder="请输入姓名">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">所属部门</label>
+														<div class="col-sm-10">
+															<select class="form-control" style="height: 3rem;"
+																name="department" id="add_department">
+																<option value="0">请选择部门</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</form>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">关闭</button>
+												<button type="button" class="btn btn-primary" id="addSubmit">提交更改</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 模态框end-->
+
+								<!-- updateuser 模态框start -->
+								<div class="modal fade" id="updateUser" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">更新用户信息</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true">×</button>
+											</div>
+											<div class="modal-body">
+												<form class="form-horizontal" role="form"
+													id="userUpdateForm">
+													<div class="form-group">
+														<label for="firstname" class="col-sm-2 control-label">工号</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control" name="account"
+																placeholder="请输入工号" id="update_account">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">密码</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control" name="password"
+																placeholder="请输入密码" id="update_password">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">姓名</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control"
+																placeholder="请输入姓名" id="update_name">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">邮箱</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control"
+																placeholder="请输入邮箱" id="update_mail">
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="lastname" class="col-sm-2 control-label">所属部门</label>
+														<div class="col-sm-10">
+															<select class="form-control" style="height: 3rem;"
+																name="department" id="update_department">
+																<option value="0">请选择部门</option>
+															</select>
+														</div>
+													</div>
+													<input type="text" class="form-control" placeholder="请输入工号"
+														id="update_id" style="display: none;">
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">关闭</button>
+												<button type="button" class="btn btn-primary"
+													id="updateUserSubmit">提交更改</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 模态框end-->
+							</form>
+							<div class="am-cf">
+								共 <span id="totalCount"></span>
+								<div class="am-fr">
+									<div class="input-group pull-right">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button">跳转至</button>
+										</span> <input type="text" class="form-control"
+											style="max-width: 100px;" id="jump">
+										<button class="btn btn-success" type="button" id="go">GO>></button>
+									</div>
+									<ul class="pages am-pagination">
+										<li class="cpage" id="preli"><a id="pre"
+											style="cursor: pointer;">&lt;</a></li>
+										<li class="cpage  am-active"><a href="javascript:void(0)"
+											id="current" style="cursor: pointer;">1</a></li>
+										<li class="cpage" id="mid"><a href="javascript:void(0)">....</a></li>
+										<li class="cpage" id="finalPage_li" style="color: #6FB3E0"><a
+											id="finalPage" style="cursor: pointer;">2</a></li>
+										<li class="cpage" style="color: #6FB3E0"><a id="next"
+											style="cursor: pointer;">&gt;</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- content end -->
+		</div>
+	</div>
+
+	<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<script src="static/js/jquery-1.11.3.min.js"></script>
+	<!--<![endif]-->
+
+	<script type="text/javascript" src="static/myplugs/js/plugs.js"></script>
+	<script
+		src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="static/parameter.js"></script>
+	<script src="static/business/user.js"></script>
+	<script>
+		
+	</script>
+</body>
+
+</html>

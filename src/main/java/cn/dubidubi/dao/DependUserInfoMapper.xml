@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.dubidubi.dao.DependUserInfoMapper">
+	<resultMap id="BaseResultMap" type="cn.dubidubi.model.DependUserInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="department_id" property="departmentId"
+			jdbcType="INTEGER" />
+		<result column="mail" property="mail" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, account, password, name, department, department_id
+	</sql>
+
+	<sql id="no_id_Column_List">
+		account, password, name, department, department_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sys_depend_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="saveOneUserInfo" parameterType="cn.dubidubi.model.dto.ClientUserDTO">
+		insert
+		sys_depend_info(account,password,name,department,department_id)
+		values(#{account},#{password},#{name},#{department},#{departmentId});
+	</insert>
+
+	<select id="listAllDependUserInfo" resultMap="BaseResultMap"
+		parameterType="cn.dubidubi.model.dto.QueryDTO">
+		SELECT d.id,
+		d.account, d.password, d.name, d.department,
+		d.department_id ,u.mail
+		FROM sys_depend_info
+		AS d LEFT JOIN sys_user AS
+		u ON d.account
+		=u.account
+		<where>
+			<if test="search!=null">
+				(d.account =#{search} or d.name=#{search})
+			</if>
+			<if test="changeId!=null">
+				AND d.department_id =#{changeId}
+			</if>
+		</where>
+	</select>
+
+	<select id="getIdByAccount" resultType="int" parameterType="string">
+		select id from sys_depend_info where account=#{v}
+	</select>
+
+	<delete id="delOneById" parameterType="int">
+		delete from
+		sys_depend_info where id =#{v}
+	</delete>
+
+	<update id="updateOne" parameterType="cn.dubidubi.model.dto.ClientUserDTO">
+		UPDATE sys_depend_info
+		<set>
+			account
+			=#{account},password=#{password},name=#{name},department=#{department},department_id=#{departmentId}
+		</set>
+		WHERE
+		id =#{id};
+	</update>
+
+	<update id="updateDependnameByDependId" parameterType="cn.dubidubi.model.DepartmentInfo">
+		update sys_depend_info
+		<set>
+			department =#{departmentName}
+		</set>
+		where department_id =#{id}
+	</update>
+
+
+	<select id="countAccount" parameterType="String" resultType="int">
+		select count(*) from sys_depend_info where account =#{v};
+	</select>
+</mapper>

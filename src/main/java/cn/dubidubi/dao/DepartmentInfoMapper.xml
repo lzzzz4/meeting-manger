@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.dubidubi.dao.DepartmentInfoMapper">
+	<resultMap id="BaseResultMap" type="cn.dubidubi.model.DepartmentInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="department_name" property="departmentName"
+			jdbcType="VARCHAR" />
+		<result column="department_superior" property="departmentSuperior"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, department_name, department_superior
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from department_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="listAllDepartmentInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from department_info
+	</select>
+
+	<select id="listDepartmentInfoByQuery" parameterType="cn.dubidubi.model.dto.QueryDTO"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from department_info
+		<where>
+			<if test="search!=null">
+				(department_name like "%"#{search}"%" or
+				department_superior
+				like "%"#{search}"%")
+			</if>
+		</where>
+	</select>
+
+	<insert id="saveOne" parameterType="cn.dubidubi.model.DepartmentInfo">
+		insert
+		department_info(department_name,department_superior)
+		values(#{departmentName},#{departmentSuperior})
+	</insert>
+
+	<update id="updateOne" parameterType="cn.dubidubi.model.DepartmentInfo">
+		update department_info
+		<set>
+			department_name =#{departmentName},
+			department_superior
+			=#{departmentSuperior}
+		</set>
+		where id =#{id};
+	</update>
+
+	<delete id="delOne" parameterType="int">
+		delete from department_info
+		where
+		id =#{v};
+	</delete>
+</mapper>

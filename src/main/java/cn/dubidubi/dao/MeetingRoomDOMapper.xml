@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.dubidubi.dao.MeetingRoomDOMapper">
+	<resultMap id="BaseResultMap" type="cn.dubidubi.model.MeetingRoomDO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="room" property="room" jdbcType="VARCHAR" />
+		<result column="max_people" property="maxPeople" jdbcType="INTEGER" />
+		<result column="open_date" property="openDate" jdbcType="VARCHAR" />
+		<result column="end_date" property="endDate" jdbcType="VARCHAR" />
+		<result column="open_time" property="openTime" jdbcType="TIME" />
+		<result column="end_time" property="endTime" jdbcType="TIME" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+		<result column="department_id" property="departmentId"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, room, max_people, open_date, end_date,
+		open_time,
+		end_time, department,department_id,
+		pic_url
+	</sql>
+
+	<sql id="Column_List">
+		id, room, max_people, open_date, end_date,
+		open_time,
+		end_time, department,department_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sys_meeting_room
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="listAllMeetingRoomByQuery" parameterType="cn.dubidubi.model.dto.QueryDTO"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Column_List" />
+		from sys_meeting_room
+		<where>
+			<if test="search!=null">
+				(room=#{search} or open_date like "%"#{search}"%" or
+				end_date like "%"#{search}"%" or
+				max_people=#{search})
+			</if>
+			<if test="changeId!=null">
+				and (department_id =#{changeId})
+			</if>
+		</where>
+	</select>
+
+	<insert id="saveOne" parameterType="cn.dubidubi.model.dto.MeetingRoomDTO">
+		insert
+		sys_meeting_room(room,max_people,open_date,end_date,open_time,end_time,department,department_id)
+		values(#{room},#{max},#{open_date},#{endDate},#{start_time},#{close_time},#{department_name},#{department})
+	</insert>
+
+	<select id="getIdByName" parameterType="String" resultType="int">
+		select id from sys_meeting_room where room=#{v}
+	</select>
+
+
+	<update id="updateOne" parameterType="cn.dubidubi.model.dto.MeetingRoomDTO">
+		update sys_meeting_room
+		<set>
+			room =#{room},max_people=#{max},open_date =#{open_date},end_date
+			=#{endDate},open_time=#{start_time},end_time=#{close_time},department=#{department_name},department_id
+			=#{department}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delOneById" parameterType="int">
+		delete from
+		sys_meeting_room
+		where id =#{v};
+	</delete>
+
+	<select id="countByRoom" parameterType="String" resultType="int">
+		select count(*) from sys_meeting_room where room=#{v};
+	</select>
+
+
+	<update id="updateDepartmentByDepartmentId" parameterType="cn.dubidubi.model.DepartmentInfo">
+		update sys_meeting_room
+		<set>
+			department=#{departmentName}
+		</set>
+		where department_id=#{id}
+	</update>
+</mapper>
