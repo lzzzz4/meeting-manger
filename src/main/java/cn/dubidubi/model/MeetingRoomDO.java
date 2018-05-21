@@ -30,7 +30,17 @@ public class MeetingRoomDO implements Serializable {
 	private String picUrl;
 
 	private Integer departmentId;
+
+	private String autoReview;
 	private static final long serialVersionUID = 1L;
+
+	public String getAutoReview() {
+		return autoReview;
+	}
+
+	public void setAutoReview(String autoReview) {
+		this.autoReview = autoReview;
+	}
 
 	public Integer getDepartmentId() {
 		return departmentId;

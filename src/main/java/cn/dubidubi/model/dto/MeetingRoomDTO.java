@@ -6,104 +6,112 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 
-* @author linzj
-* @Description: 会议室管理的dto类
-* @ClassName: MeetingRoomDTO  
-* @date 2018年4月19日 下午4:43:39
+ * @author linzj
+ * @Description: 会议室管理的dto类
+ * @ClassName: MeetingRoomDTO
+ * @date 2018年4月19日 下午4:43:39
  */
 public class MeetingRoomDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String[] openDays;
-	private String room;
-	private String max;
-	private String start_time;
-	private String close_time;
-	private Integer department;
-	private String department_name;
-	private String open_date; // join后的字符串即opendate
-	private String endDate;
-	private Integer id;
+    private String[] openDays;
+    private String room;
+    private String max;
+    private String start_time;
+    private String close_time;
+    private Integer department;
+    private String department_name;
+    private String open_date; // join后的字符串即opendate
+    private String endDate;
+    private Integer id;
+    private String autoReview;
 
-	public Integer getId() {
-		return id;
-	}
+    public String getAutoReview() {
+        return autoReview;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setAutoReview(String autoReview) {
+        this.autoReview = autoReview;
+    }
 
-	public String getEndDate() {
-		return endDate;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getOpen_date() {
-		return open_date;
-	}
+    public String getEndDate() {
+        return endDate;
+    }
 
-	public void setOpen_date(String open_date) {
-		this.open_date = open_date;
-	}
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
-	public String getStart_time() {
-		return start_time;
-	}
+    public String getOpen_date() {
+        return open_date;
+    }
 
-	public void setStart_time(String start_time) {
-		this.start_time = start_time;
-	}
+    public void setOpen_date(String open_date) {
+        this.open_date = open_date;
+    }
 
-	public String[] getOpenDays() {
-		return openDays;
-	}
+    public String getStart_time() {
+        return start_time;
+    }
 
-	public void setOpenDays(String[] openDays) {
-		this.openDays = openDays;
-	}
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
 
-	public String getRoom() {
-		return room;
-	}
+    public String[] getOpenDays() {
+        return openDays;
+    }
 
-	public void setRoom(String room) {
-		this.room = room;
-	}
+    public void setOpenDays(String[] openDays) {
+        this.openDays = openDays;
+    }
 
-	public String getMax() {
-		return max;
-	}
+    public String getRoom() {
+        return room;
+    }
 
-	public void setMax(String max) {
-		this.max = max;
-	}
+    public void setRoom(String room) {
+        this.room = room;
+    }
 
-	public String getClose_time() {
-		return close_time;
-	}
+    public String getMax() {
+        return max;
+    }
 
-	public void setClose_time(String close_time) {
-		this.close_time = close_time;
-	}
+    public void setMax(String max) {
+        this.max = max;
+    }
 
-	public String getDepartment_name() {
-		return department_name;
-	}
+    public String getClose_time() {
+        return close_time;
+    }
 
-	public void setDepartment_name(String department_name) {
-		this.department_name = department_name;
-	}
+    public void setClose_time(String close_time) {
+        this.close_time = close_time;
+    }
 
-	public Integer getDepartment() {
-		return department;
-	}
+    public String getDepartment_name() {
+        return department_name;
+    }
 
-	public void setDepartment(Integer department) {
-		this.department = department;
-	}
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
+    }
+
+    public Integer getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Integer department) {
+        this.department = department;
+    }
 
 }
