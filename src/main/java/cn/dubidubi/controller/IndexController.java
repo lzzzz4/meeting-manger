@@ -16,42 +16,41 @@ import sun.tools.tree.IdentifierExpression;
 @Controller
 @RequestMapping("/index")
 /**
- * 
-* @author linzj
-* @ClassName: IndexController  
-* @Description: 首页index
-* @date 2018年4月16日 下午2:49:47
+ *
+ * @author linzj
+ * @ClassName: IndexController
+ * @Description: 首页index
+ * @date 2018年4月16日 下午2:49:47
  */
 public class IndexController {
-	static String URL = "http://dubidubi.cn/meetingroom-web/index/open.do?random=";
+    static String URL = "http://dubidubi.cn/meetingroom-web/index/open.do?random=";
 
-	/**
-	 * 
-	* @Title: init  
-	* @Description: 初始化首页的状态栏
-	* @param @param request
-	* @param @return
-	* @return IndexJSON
-	* @author linzj
-	* @date 2018年4月16日 下午2:49:57 
-	* @throws
-	 */
-	@RequestMapping("/init")
-	@ResponseBody
-	public IndexJSON init(HttpServletRequest request) {
-		IndexJSON indexJSON = new IndexJSON();
-		UserDO userDO = (UserDO) request.getSession().getAttribute("user");
-		// 用户信息的设置
-		indexJSON.setAccount(userDO.getAccount());
-		indexJSON.setUserId(userDO.getId());
-		indexJSON.setUsername(userDO.getUsername());
-		// 设置审核的url参数
-		String str = RandomStringUtils.randomAlphabetic(6);
-		String finalStr = str + "123456";
-		String base64 = Base64.encodeBase64URLSafeString(finalStr.getBytes());
-		// 设置url
-		String url = URL + base64 + "&account=" + userDO.getAccount();
-		indexJSON.setURL(url);
-		return indexJSON;
-	}
+    /**
+     * @param @param  request
+     * @param @return
+     * @return IndexJSON
+     * @throws
+     * @Title: init
+     * @Description: 初始化首页的状态栏
+     * @author linzj
+     * @date 2018年4月16日 下午2:49:57
+     */
+    @RequestMapping("/init")
+    @ResponseBody
+    public IndexJSON init(HttpServletRequest request) {
+        IndexJSON indexJSON = new IndexJSON();
+        UserDO userDO = (UserDO) request.getSession().getAttribute("user");
+        // 用户信息的设置
+        indexJSON.setAccount(userDO.getAccount());
+        indexJSON.setUserId(userDO.getId());
+        indexJSON.setUsername(userDO.getUsername());
+        // 设置审核的url参数
+        String str = RandomStringUtils.randomAlphabetic(6);
+        String finalStr = str + "123456";
+        String base64 = Base64.encodeBase64URLSafeString(finalStr.getBytes());
+        // 设置url
+        String url = URL + base64 + "&account=" + userDO.getAccount();
+        indexJSON.setApiUrl("http://39.108.77.70/dist/index.html#/loginAPI?account=" + userDO.getAccount() + "&password=" + "admin");
+        return indexJSON;
+    }
 }
