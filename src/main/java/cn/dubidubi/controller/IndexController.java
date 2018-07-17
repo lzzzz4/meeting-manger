@@ -24,6 +24,7 @@ import sun.tools.tree.IdentifierExpression;
  */
 public class IndexController {
     static String URL = "http://dubidubi.cn/meetingroom-web/index/open.do?random=";
+    static String PcUrl = "http://39.108.77.70/dist/index.html#/";
 
     /**
      * @param @param  request
@@ -50,7 +51,7 @@ public class IndexController {
         String base64 = Base64.encodeBase64URLSafeString(finalStr.getBytes());
         // 设置url
         String url = URL + base64 + "&account=" + userDO.getAccount();
-        indexJSON.setApiUrl("http://39.108.77.70/dist/index.html#/loginAPI?account=" + userDO.getAccount() + "&password=" + "admin");
+        indexJSON.setApiUrl(PcUrl + "loginAPI?account=" + userDO.getAccount() + "&password=" + userDO.getPassword());
         return indexJSON;
     }
 }
